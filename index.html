@@ -51,12 +51,12 @@ footer{background:#17231b;color:#e8e4db;padding:26px 0}.footer-row{display:flex;
 <script>
 // Configure this before publishing: international format, digits only, no +, spaces or dashes.
 const WHATSAPP_NUMBER = "212770613717";
-const isConfigured = WHATSAPP_NUMBER !== "";
+const isConfigured = true;
 document.getElementById('year').textContent = new Date().getFullYear();
 const waFloat = document.getElementById('waFloat');
 waFloat.addEventListener('click', function(e){
   if (!isConfigured) { e.preventDefault(); document.getElementById('contact').scrollIntoView({behavior:'smooth'}); document.getElementById('formStatus').textContent = 'Avant publication, configurez votre numéro WhatsApp professionnel dans le code du site.'; }
-  else { this.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Bonjour Hostcraft Institute, je souhaite discuter de mon projet Airbnb.'); this.target = '_blank'; this.rel = 'noopener noreferrer'; }
+  else { this.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Bonjour Hostcraft Consultancy, je souhaite discuter de mon projet Airbnb.'); this.target = '_blank'; this.rel = 'noopener noreferrer'; }
 });
 
 document.querySelectorAll('.plan-cta').forEach(function(button){
