@@ -49,62 +49,82 @@ footer{background:#17231b;color:#e8e4db;padding:26px 0}.footer-row{display:flex;
 <footer><div class="wrap footer-row"><div><div class="footer-brand">Hostcraft Institute</div><p>Airbnb Launch & Hosting Consultancy</p></div><p>© <span id="year"></span> Hostcraft Institute. Tous droits réservés.</p><a href="#contact">Nous contacter ↑</a></div></footer>
 <a class="wa-float" id="waFloat" href="#contact" aria-label="Contacter Hostcraft Institute sur WhatsApp">WhatsApp ↗</a>
 <script>
-const WHATSAPP_NUMBER = "212770613717";
+document.addEventListener('DOMContentLoaded', function () {
 
-// Update footer year
-document.getElementById('year').textContent = new Date().getFullYear();
+  const WHATSAPP_NUMBER = "212770613717";
+  const WHATSAPP_URL = "https://wa.me/" + WHATSAPP_NUMBER;
 
-// Floating WhatsApp button
-const waFloat = document.getElementById('waFloat');
+  // Update footer year
+  const year = document.getElementById('year');
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
 
-waFloat.addEventListener('click', function(e) {
-  e.preventDefault();
+  // Floating WhatsApp button
+  const waFloat = document.getElementById('waFloat');
 
-  const message = 'Bonjour Hostcraft Consultancy, je souhaite discuter de mon projet Airbnb.';
+  if (waFloat) {
+    waFloat.addEventListener('click', function (e) {
+      e.preventDefault();
 
-  window.open(
-    'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message),
-    '_blank'
-  );
-});
+      const message =
+        "Bonjour Hostcraft Consultancy, je souhaite discuter de mon projet Airbnb.";
 
-// Pricing plan selection
-document.querySelectorAll('.plan-cta').forEach(function(button) {
-  button.addEventListener('click', function() {
-    const support = document.getElementById('support');
-    if (support) {
-      support.value = this.dataset.plan;
-    }
+      window.open(
+        WHATSAPP_URL + "?text=" + encodeURIComponent(message),
+        "_blank"
+      );
+    });
+  }
+
+  // Pricing plan selection
+  document.querySelectorAll('.plan-cta').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const support = document.getElementById('support');
+
+      if (support) {
+        support.value = this.dataset.plan || "";
+      }
+    });
   });
-});
 
-// Contact form submission
-document.getElementById('assessmentForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+  // Contact form submission
+  const assessmentForm = document.getElementById('assessmentForm');
 
-  const form = new FormData(this);
-  const get = key => (form.get(key) || '').toString().trim();
+  if (assessmentForm) {
+    assessmentForm.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-  const message = [
-    'Bonjour Hostcraft Consultancy, je souhaite demander une évaluation de mon projet Airbnb.',
-    '',
-    'Nom : ' + get('name'),
-    'Téléphone : ' + get('phone'),
-    'E-mail : ' + (get('email') || 'Non renseigné'),
-    'Type de logement : ' + get('property'),
-    'État actuel : ' + get('status'),
-    'Calendrier : ' + (get('timeline') || 'Non précisé'),
-    'Accompagnement souhaité : ' + (get('support') || 'À définir'),
-    'Détails du projet : ' + get('details')
-  ].join('\n');
+      const form = new FormData(this);
+      const get = key => (form.get(key) || '').toString().trim();
 
-  const whatsappURL =
-    'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+      const message = [
+        "Bonjour Hostcraft Consultancy, je souhaite demander une évaluation de mon projet Airbnb.",
+        "",
+        "Nom : " + get('name'),
+        "Téléphone : " + get('phone'),
+        "E-mail : " + (get('email') || "Non renseigné"),
+        "Type de logement : " + get('property'),
+        "État actuel : " + get('status'),
+        "Calendrier : " + (get('timeline') || "Non précisé"),
+        "Accompagnement souhaité : " + (get('support') || "À définir"),
+        "Détails du projet : " + get('details')
+      ].join("\n");
 
-  window.open(whatsappURL, '_blank');
+      const whatsappURL =
+        WHATSAPP_URL + "?text=" + encodeURIComponent(message);
 
-  document.getElementById('formStatus').textContent =
-    'WhatsApp s’ouvre avec votre demande préremplie. Vérifiez le message puis envoyez-le.';
+      window.open(whatsappURL, "_blank");
+
+      const formStatus = document.getElementById('formStatus');
+
+      if (formStatus) {
+        formStatus.textContent =
+          "Votre demande est prête dans WhatsApp. Vérifiez le message puis envoyez-le.";
+      }
+    });
+  }
+
 });
 </script>
 </body>
