@@ -49,41 +49,62 @@ footer{background:#17231b;color:#e8e4db;padding:26px 0}.footer-row{display:flex;
 <footer><div class="wrap footer-row"><div><div class="footer-brand">Hostcraft Institute</div><p>Airbnb Launch & Hosting Consultancy</p></div><p>© <span id="year"></span> Hostcraft Institute. Tous droits réservés.</p><a href="#contact">Nous contacter ↑</a></div></footer>
 <a class="wa-float" id="waFloat" href="#contact" aria-label="Contacter Hostcraft Institute sur WhatsApp">WhatsApp ↗</a>
 <script>
-// Configure this before publishing: international format, digits only, no +, spaces or dashes.
 const WHATSAPP_NUMBER = "212770613717";
-const isConfigured = true;
+
+// Update footer year
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Floating WhatsApp button
 const waFloat = document.getElementById('waFloat');
-waFloat.addEventListener('click', function(e){
-  if (!isConfigured) { e.preventDefault(); document.getElementById('contact').scrollIntoView({behavior:'smooth'}); document.getElementById('formStatus').textContent = 'Avant publication, configurez votre numéro WhatsApp professionnel dans le code du site.'; }
-  else { this.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('Bonjour Hostcraft Consultancy, je souhaite discuter de mon projet Airbnb.'); this.target = '_blank'; this.rel = 'noopener noreferrer'; }
+
+waFloat.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const message = 'Bonjour Hostcraft Consultancy, je souhaite discuter de mon projet Airbnb.';
+
+  window.open(
+    'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message),
+    '_blank'
+  );
 });
 
-document.querySelectorAll('.plan-cta').forEach(function(button){
- button.addEventListener('click', function(){
-   const support = document.getElementById('support');
-   if (support) { support.value = this.dataset.plan; }
- });
+// Pricing plan selection
+document.querySelectorAll('.plan-cta').forEach(function(button) {
+  button.addEventListener('click', function() {
+    const support = document.getElementById('support');
+    if (support) {
+      support.value = this.dataset.plan;
+    }
+  });
 });
 
-document.getElementById('assessmentForm').addEventListener('submit', function(e){
- e.preventDefault();
- const form = new FormData(this);
- const get = key => (form.get(key) || '').toString().trim();
- const message = [
-  'Bonjour Hostcraft Institute, je souhaite demander une évaluation de mon projet Airbnb.', '',
-  'Nom : ' + get('name'), 'Téléphone : ' + get('phone'), 'E-mail : ' + (get('email') || 'Non renseigné'),
-  'Type de logement : ' + get('property'), 'État actuel : ' + get('status'),
-  'Calendrier : ' + (get('timeline') || 'Non précisé'), 'Accompagnement souhaité : ' + (get('support') || 'À définir'),
-  'Détails du projet : ' + get('details')
- ].join('\n');
- if (!isConfigured) {
-   const status = document.getElementById('formStatus');
-   status.textContent = 'Le formulaire est prêt, mais le numéro WhatsApp professionnel doit être configuré avant de pouvoir envoyer votre demande. Remplacez WHATSAPP_NUMBER dans le code du site.';
-   return;
- }
- window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
- document.getElementById('formStatus').textContent = 'WhatsApp s’ouvre avec votre demande préremplie. Vérifiez le message puis envoyez-le.';
+// Contact form submission
+document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const form = new FormData(this);
+  const get = key => (form.get(key) || '').toString().trim();
+
+  const message = [
+    'Bonjour Hostcraft Consultancy, je souhaite demander une évaluation de mon projet Airbnb.',
+    '',
+    'Nom : ' + get('name'),
+    'Téléphone : ' + get('phone'),
+    'E-mail : ' + (get('email') || 'Non renseigné'),
+    'Type de logement : ' + get('property'),
+    'État actuel : ' + get('status'),
+    'Calendrier : ' + (get('timeline') || 'Non précisé'),
+    'Accompagnement souhaité : ' + (get('support') || 'À définir'),
+    'Détails du projet : ' + get('details')
+  ].join('\n');
+
+  const whatsappURL =
+    'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+
+  window.open(whatsappURL, '_blank');
+
+  document.getElementById('formStatus').textContent =
+    'WhatsApp s’ouvre avec votre demande préremplie. Vérifiez le message puis envoyez-le.';
 });
 </script>
 </body>
